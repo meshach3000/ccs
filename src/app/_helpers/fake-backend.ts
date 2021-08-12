@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 import {
   HttpRequest,
   HttpResponse,
@@ -6,39 +6,35 @@ import {
   HttpEvent,
   HttpInterceptor,
   HTTP_INTERCEPTORS
-} from "@angular/common/http";
-import { Observable, of, throwError } from "rxjs";
-import { delay, mergeMap, materialize, dematerialize } from "rxjs/operators";
-import { User, Role, RoleType } from "../_models";
+} from '@angular/common/http';
+import { Observable, of, throwError } from 'rxjs';
+import { delay, mergeMap, materialize, dematerialize } from 'rxjs/operators';
+import { User, Role, RoleType } from '../_models';
 
 const roleswoe: Role[] = [
   { roletype: RoleType.HeroesReader },
   { roletype: RoleType.HeroesWriter }
 ];
-const rolesdoe: Role[] = [
-  { roletype: RoleType.HeroesReader }
-];
+const rolesdoe: Role[] = [{ roletype: RoleType.HeroesReader }];
 
 const users: User[] = [
   {
     id: 1,
-    username: "jimmywoe",
-    password: "woe",
-    firstName: "Jimmy",
-    lastName: "Woe",
+    username: 'rodneyt',
+    password: 'tom',
+    firstName: 'Rodney',
+    lastName: 'Tom',
     roles: roleswoe
   },
   {
     id: 2,
-    username: "johndoe",
-    password: "doe",
-    firstName: "John",
-    lastName: "Doe",
+    username: 'kimberlyt',
+    password: 'kimt',
+    firstName: 'Kimblery',
+    lastName: 'Tom',
     roles: rolesdoe
   }
 ];
-
-
 
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
@@ -57,11 +53,11 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
     function handleRoute() {
       switch (true) {
-        case url.endsWith("/users/authenticate") && method === "POST":
+        case url.endsWith('/users/authenticate') && method === 'POST':
           return authenticate();
-        case url.endsWith("/users") && method === "GET":
+        case url.endsWith('/users') && method === 'GET':
           return getUsers();
-        case url.match(/\/users\/\d+$/) && method === "GET":
+        case url.match(/\/users\/\d+$/) && method === 'GET':
           return getUserById();
         default:
           // pass through any requests not handled above
@@ -76,7 +72,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
       const user = users.find(
         x => x.username === username && x.password === password
       );
-      if (!user) return error("Username or password is incorrect");
+      if (!user) return error('Username or password is incorrect');
       return ok({
         id: user.id,
         username: user.username,
@@ -96,7 +92,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
       if (!isLoggedIn()) return unauthorized();
 
       // only admins can access other user records
-      if (!isWriter() && currentUser().id !== idFromUrl()) return unauthorized();
+      if (!isWriter() && currentUser().id !== idFromUrl())
+        return unauthorized();
 
       const user = users.find(x => x.id === idFromUrl());
       return ok(user);
@@ -109,7 +106,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
     }
 
     function unauthorized() {
-      return throwError({ status: 401, error: { message: "unauthorized" } });
+      return throwError({ status: 401, error: { message: 'unauthorized' } });
     }
 
     function error(message) {
@@ -117,22 +114,25 @@ export class FakeBackendInterceptor implements HttpInterceptor {
     }
 
     function isLoggedIn() {
-      const authHeader = headers.get("Authorization") || "";
-      return authHeader.startsWith("Bearer fake-jwt-token");
+      const authHeader = headers.get('Authorization') || '';
+      return authHeader.startsWith('Bearer fake-jwt-token');
     }
 
     function isWriter() {
-      return isLoggedIn() && currentUser().roles.find(x=>x.roletype === RoleType.HeroesWriter);
+      return (
+        isLoggedIn() &&
+        currentUser().roles.find(x => x.roletype === RoleType.HeroesWriter)
+      );
     }
 
     function currentUser() {
       if (!isLoggedIn()) return;
-      const id = parseInt(headers.get("Authorization").split(".")[1]);
+      const id = parseInt(headers.get('Authorization').split('.')[1]);
       return users.find(x => x.id === id);
     }
 
     function idFromUrl() {
-      const urlParts = url.split("/");
+      const urlParts = url.split('/');
       return parseInt(urlParts[urlParts.length - 1]);
     }
   }

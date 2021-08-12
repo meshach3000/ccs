@@ -1,23 +1,39 @@
 <!-- nav -->
-<nav class="navbar navbar-expand navbar-dark bg-dark" *ngIf="currentUser">
-    <div class="navbar-nav">
-        <a class="nav-item nav-link" routerLink="/">Home</a>
-        <a class="nav-item nav-link" routerLink="/admin" *ngIf="isWriter">Writer</a>
-        <a class="nav-item nav-link" (click)="logout()">Logout</a>
+    <nav class="navbar navbar-expand  navbar-dark bg-primary" *ngIf="currentUser">
+        <div class="navbar-nav">
+            <a class="nav-item nav-link" routerLink="/">Home</a>
+            <a class="nav-item nav-link" routerLink="/admin" *ngIf="isWriter">Admin</a>
+            <a class="nav-item nav-link" (click)="logout()">Logout</a>
+        </div>
+    </nav>
+
+    <!-- main app container -->
+
+    <div class="container">
+        <div class="content">
+            <div class="row">
+                <div class="col">
+
+                    <router-outlet></router-outlet>
+                </div>
+            </div>
+        </div>
     </div>
-</nav>
+    <br>
+    <br>
 
-<!-- main app container -->
-<div class="container">
-    <router-outlet></router-outlet>
-</div>
 
-<!-- credits -->
-<div class="text-center mt-4">
-    <p>
-        <a href="https://jasonwatmore.com/post/2019/08/06/angular-8-role-based-authorization-tutorial-with-example" target="_top">Angular 8 - Role Based Authorization Tutorial with Example</a>
-    </p>
-    <p>
-        <a href="https://jasonwatmore.com" target="_top">JasonWatmore.com</a>
-    </p>
-</div>
+    <footer class="footer bg-primary text-white text-center text-lg-start">
+        <!-- Grid container -->
+        <div class="container p-4">
+            <!--Grid row-->
+            <div class="row">
+                <!--Grid column-->
+                <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
+                    <h5 class="text-uppercase">CCPD3V-T3@M</h5>
+                </div>
+
+            </div>
+            <!--Grid row-->
+        </div>
+    </footer>

@@ -1,6 +1,6 @@
 <div class="AddEmployeeTitleContainer">
   <div class="addEmployeeTitleContainer">
-    <div>Add Employee</div>
+    <div>Add User</div>
   </div>
   <div class="addEmployeeBtnContainer">
     <div class="addNewEmployeeBtn" (click)="addNewEmployeeBtn()">+</div>
@@ -37,7 +37,7 @@
 </div>
 
 
-<div class="tableWrapper">
+<div class="tableWrapper ">
   <div class="containerTitle">
     <div class="oneTitle">Name</div>
     <div class="twoTitle">Position</div>
@@ -50,8 +50,8 @@
     <div class="one">{{employee.name}}</div>
     <div class="two">{{employee.position}}</div>
     <div class="three">
-      <button (click)="editEmployee(i)">E</button>
-      <button (click)="deleteEmployee(i)">X</button>
+      <button class="btn btn-warning" (click)="editEmployee(i)">Edit</button>
+      <button class="btn btn-danger" (click)="deleteEmployee(i)">Delete</button>
     </div>
     <!-- <div class="four"></div> -->
   </div>
@@ -60,7 +60,7 @@
 
 
 <div class="editEmployeeTitleContainer">
-  <div class="">Edit Employee</div>
+  <div class="">Edit User</div>
 </div>
 
 <form>
@@ -83,5 +83,5 @@
            [(ngModel)]="model2.position"
            placeholder="Position">
   </div>
-  <button type="submit" (click)="updateEmployee()">Update</button>
+  <button type="submit" (click)="updateEmployee() " class="btn btn-primary">Update</button>
 </form>
